@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <title>Result</title>
+  </head>
+  <body>
+    <h1><%= result %></h1>
+    <table>
+      <thead>
+        <tr>
+            <th>NAME</th>
+            <th>TEAM NAME</th>
+            <th>TOTAL RUNS</th>
+            <th>CENTURIES</th>
+            <th>HALF CENTURIES</th>
+            <th>AVERAGE</th>
+            <th>WICKETS</th>
+            <th>BASE PRICE</th>
+            <th>SOLD PRICE</th>
+        </tr>
+      </thead>
+      
+
+      <%for(var i=0;i<11;i++){%>
+      <tr>
+        <td><%= list_t1[i]["name"] %></td>
+        <td><%= list_t1[i]["tname"] %></td>
+        <td><%= list_t1[i]["runs"] %></td>
+        <td><%= list_t1[i]["centuries"] %></td>
+        <td><%= list_t1[i]["halfCenturies"] %></td>
+        <td><%= list_t1[i]["average"] %></td>
+        <td><%= list_t1[i]["wickets"] %></td>
+        <td><%= list_t1[i]["basePrice"] %></td>
+        <td><%= list_t1[i]["soldPrice"] %></td>
+      </tr>
+      <%}%>
+    </table>
+
+    <table>
+        <thead>
+          <tr>
+              <th>NAME</th>
+              <th>TEAM NAME</th>
+              <th>TOTAL RUNS</th>
+              <th>CENTURIES</th>
+              <th>HALF CENTURIES</th>
+              <th>AVERAGE</th>
+              <th>WICKETS</th>
+              <th>BASE PRICE</th>
+              <th>SOLD PRICE</th>
+          </tr>
+        </thead>
+        
+  
+        <%for(var i=0;i<11;i++){%>
+        <tr>
+          <td><%= list_t2[i]["name"] %></td>
+          <td><%= list_t2[i]["tname"] %></td>
+          <td><%= list_t2[i]["runs"] %></td>
+          <td><%= list_t2[i]["centuries"] %></td>
+          <td><%= list_t2[i]["halfCenturies"] %></td>
+          <td><%= list_t2[i]["average"] %></td>
+          <td><%= list_t2[i]["wickets"] %></td>
+          <td><%= list_t2[i]["basePrice"] %></td>
+          <td><%= list_t2[i]["soldPrice"] %></td>
+        </tr>
+        <%}%>
+      </table>
+  </body>
+</html>
