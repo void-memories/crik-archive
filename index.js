@@ -19,7 +19,7 @@ app.get("/", function (req, res) {
 
 var list_t1 = [];
 var list_t2 = [];
-var finalVerdict="";
+var finalVerdict = "";
 
 const teamSchema = new mongoose.Schema({
   players: [
@@ -39,10 +39,14 @@ const teamSchema = new mongoose.Schema({
 const Team = mongoose.model("Team", teamSchema);
 
 const matchSchema = new mongoose.Schema({
-  t1: String,
-  t2: String,
-  date:String,
-  result: String,
+  matches: [
+    {
+      t1: String,
+      t2: String,
+      date: String,
+      result: String,
+    },
+  ],
 });
 const Match = mongoose.model("Match", matchSchema);
 
@@ -50,16 +54,18 @@ app.post("/", function (req, res) {
   var team1 = req.body.T1;
   var team2 = req.body.T2;
   var date = req.body.dt;
-  console.log(date);
+  // console.log(date);
 
-  Match.find(function (err, mat) {
+  Match.find(function (err, mat1) {
     if (err) {
       console.log("Match Not Found In The Database");
     } else {
-      mat.find(function (prop) {
-        if (prop.t1 == team1 && prop.t2 == team2 && prop.date==date) {
+      var mat = mat1[0]["matches"];
+      // console.log(mat1[0]["matches"], "mat1");
+      mat.forEach(function (prop) {
+        if (((prop.t1 == team1 && prop.t2 == team2 ) || (prop.t1 == team2 && prop.t2 == team1 ))&& prop.date == date) {
           // console.log(team1, team2, prop.result);
-          finalVerdict=prop.result;
+          finalVerdict = prop.result;
 
           Team.find(function (err1, country) {
             if (err1) {
@@ -71,19 +77,21 @@ app.post("/", function (req, res) {
                 //To print team1
 
                 player_array.forEach((individual) => {
-                  if (individual["tname"] == team1)
-                list_t1.push(individual);
+                  if (individual["tname"] == team1) list_t1.push(individual);
                 });
 
                 //To print team2
                 player_array.forEach((individual) => {
-                  if (individual["tname"] == team2)
-                    list_t2.push(individual);
+                  if (individual["tname"] == team2) list_t2.push(individual);
                   // console.log(individual["name"]);
                 });
-                if(list_t1.length!=0 && list_t2.length!=0)
-                // console.log(list_t1,list_t2);
-                res.render("result",{list_t1:list_t1,list_t2:list_t2,result:finalVerdict});
+                if (list_t1.length != 0 && list_t2.length != 0)
+                  // console.log(list_t1,list_t2);
+                  res.render("result", {
+                    list_t1: list_t1,
+                    list_t2: list_t2,
+                    result: finalVerdict,
+                  });
               });
             }
           });
@@ -91,9 +99,7 @@ app.post("/", function (req, res) {
       });
     }
     // res.send();
-    
   });
-  
 });
 
 app.listen(3000);

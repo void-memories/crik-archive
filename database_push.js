@@ -21,7 +21,7 @@ const teamSchema = new mongoose.Schema({
 });
 
 const Team = mongoose.model("Team", teamSchema);
-const india = new Team({
+const India = new Team({
   players: [
     {
       name: "Sachin Tendulkar",
@@ -287,7 +287,7 @@ const australia = new Team({
   ],
 });
 
-const england = new Team({
+const England = new Team({
   players: [
     {
       name: "Ben Stokes",
@@ -413,7 +413,7 @@ const england = new Team({
   ],
 });
 
-const spain = new Team({
+const Spain = new Team({
   players: [
     {
       name: "Paul Hennesy",
@@ -936,29 +936,306 @@ const sriLanka = new Team({
 });
 
 const matchSchema = new mongoose.Schema({
-  t1: String,
-  t2: String,
-  date:String,
-  result: String,
+  matches: [
+    {
+      t1: String,
+      t2: String,
+      date: String,
+      result: String,
+    },
+  ],
 });
 
 const Match = mongoose.model("Match", matchSchema);
-const m1 = new Match(
-  {
-  t1: "India",
-  t2: "Australia",
-  date:"2020-04-20",
-  result: "India won by 6 wickets",
-}
-);
+const m1 = new Match({
+  matches: [
+    {
+      t1: "India",
+      t2: "Australia",
+      date:"2020-04-20",
+      result: "India won by 6 wickets",
+    },
+    {
+      t1: "England",
+      t2: "Australia",
+      date:"2020-04-03",
+      result: "England won by 20 runs",
+    },
+    {
+      t1: "England",
+      t2: "India",
+      date:"2020-04-02",
+      result: "India won by 2 runs",
+    },
+    {
+      t1: "England",
+      t2: "Sri Lanka",
+      date:"2020-04-05",
+      result: "England won by 23 runs",
+    },
+    {
+      t1: "India",
+      t2: "Sri Lanka",
+      date:"2020-04-04",
+      result: "Sri Lanka won by 5 wickets",
+    },
+    {
+      t1: "Spain",
+      t2: "South Africa",
+      date:"2020-04-02",
+      result: "South Africa won by 98 runs",
+    },
+    {
+      t1: "New Zealand",
+      t2: "South Africa",
+      date:"2020-04-05",
+      result: "South Africa won by 3 wickets",
+    },
+    {
+      t1: "Australia",
+      t2: "Spain",
+      date:"2020-04-06",
+      result: "Australia won by 4 wickets",
+    },
+    {
+      t1: "India",
+      t2: "England",
+      date:"2020-04-06",
+      result: "India won by 4 wickets",
+    },
+    {
+      t1: "India",
+      t2: "Spain",
+      date:"2020-04-08",
+      result: "India won by 8 wickets",
+    },
+    {
+      t1: "New Zealand",
+      t2: "Sri Lanka",
+      date:"2020-04-07",
+      result: "Sri Lanka won by 25 runs",
+    },
+    {
+      t1: "Sri Lanka",
+      t2: "South Africa",
+      date:"2020-04-08",
+      result: "South Africa won by 9 runs",
+    },
+    {
+      t1: "England",
+      t2: "New Zealand",
+      date:"2020-04-09",
+      result: "England won by 30 runs",
+    },
+    {
+      t1: "Sri Lanka",
+      t2: "Spain",
+      date:"2020-04-10",
+      result: "Spain won by 2 runs",
+    },
+    {
+      t1: "England",
+      t2: "South Africa",
+      date:"2020-04-10",
+      result: "South Africa won by 90 runs",
+    },
+    {
+      t1: "Australia",
+      t2: "Sri Lanka",
+      date:"2020-04-11",
+      result: "Australia won by 7 wickets",
+    },
+    {
+      t1: "India",
+      t2: "New Zealand",
+      date:"2020-04-11",
+      result: "India won by 3 wickets",
+    },
+    {
+      t1: "Spain",
+      t2: "South Africa",
+      date:"2020-04-12",
+      result: "South Africa won by 58 runs",
+    },
+    {
+      t1: "India",
+      t2: "Sri Lanka",
+      date:"2020-04-13",
+      result: "India won by 4 wickets",
+    },
+    {
+      t1: "Australia",
+      t2: "South Africa",
+      date:"2020-04-13",
+      result: "Australia won by 73 runs",
+    },
+    {
+      t1: "England",
+      t2: "Spain",
+      date:"2020-04-14",
+      result: "England won by 90 runs",
+    },
+    {
+      t1: "England",
+      t2: "South Africa",
+      date:"2020-04-15",
+      result: "South Africa won by 43 runs",
+    },
+    {
+      t1: "Sri Lanka",
+      t2: "Australia",
+      date:"2020-04-15",
+      result: "Australia won by 9 runs",
+    },
+    {
+      t1: "Spain",
+      t2: "New Zealand",
+      date:"2020-04-16",
+      result: "Spain won by 2 wickets",
+    },
+    {
+      t1: "India",
+      t2: "Australia",
+      date:"2020-04-17",
+      result: "India won by 60 runs",
+    },
+    
+    {
+      t1: "India",
+      t2: "Australia",
+      date:"2020-04-29",
+      result: "India won by 3 wickets",
+    },
+    {
+      t1: "Spain",
+      t2: "Sri Lanka",
+      date:"2020-04-29",
+      result: "Sri Lanka won by 9 wickets",
+    },
+    {
+      t1: "India",
+      t2: "South Africa",
+      date:"2020-04-29",
+      result: "India won by 22 runs",
+    },
+    {
+      t1: "England",
+      t2: "Australia",
+      date:"2020-04-29",
+      result: "Australia won by 5 runs",
+    },
+    {
+      t1: "India",
+      t2: "Spain ",
+      date:"2020-04-29",
+      result: "India won by 59 runs",
+    },
+    {
+      t1: "England",
+      t2: "South Africa",
+      date:"2020-04-29",
+      result: " South Africa won by 5 wickets",
+    },
+    {
+      t1: "England",
+      t2: " New Zealand",
+      date:"2020-04-21",
+      result: "England won by 7 wickets",
+    },
+    {
+      t1: "India",
+      t2: " Spain",
+      date:"2020-04-21",
+      result: "Spain won by 1 wicket",
+    },
+    {
+      t1: "South Africa",
+      t2: " New Zealand",
+      date:"2020-04-21",
+      result: "South Africa won by 54 runs",
+    },
+    {
+      t1: "South Africa ",
+      t2: " Spain",
+      date:"2020-04-21",
+      result: "Spain won by 7 wickets",
+    },
+    {
+      t1: "India",
+      t2: " New Zealand",
+      date:"2020-04-21",
+      result: "India won by 75 runss",
+    },
+    
+    {
+      t1: "South Africa",
+      t2: "India",
+      date:"2020-04-21",
+      result: "India won by 1 wicket",
+    },
+    {
+      t1: "England",
+      t2: " New Zealand",
+      date:"2020-04-25",
+      result: "England won by 33 runs",
+    },
+    
+    {
+      t1: "England",
+      t2: " Sri Lanka",
+      date:"2020-04-21",
+      result: "England won by 7 wickets",
+    },
+    {
+      t1: "Sri Lanka",
+      t2: " New Zealand",
+      date:"2020-04-21",
+      result: "Sri Lanka won by 7 wickets",
+    },
+    {
+      t1: "India ",
+      t2: " Sri Lanka",
+      date:"2020-04-21",
+      result: "India won by 4 wickets",
+    },
+    
+    {
+      t1: "Sri Lanka",
+      t2: " Spain ",
+      date:"2020-04-27",
+      result: "Sri Lanka won by 9 wickets",
+    },
+    {
+      t1: "India",
+      t2: " England",
+      date:"2020-04-27",
+      result: "England won by 2 wickets",
+    },
+    {
+      t1: "India",
+      t2: " Spain",
+      date:"2020-04-27",
+      result: "Spain won by 2 runs",
+    },
+    
+    
+    {
+      t1: "England",
+      t2: " New Zealand",
+      date:"2020-04-27",
+      result: "England won by 20 runs",
+    }
+    
+  ],
+});
 
 // IND.save();
-india.save();
+India.save();
 australia.save();
 sriLanka.save();
 southAfrica.save();
 newZealand.save();
-spain.save();
-england.save();
+Spain.save();
+England.save();
 
 m1.save();
