@@ -13,11 +13,17 @@
   </head>
   <body>
     <h1 class="title">The Crik Archive</h1>
+    
+    <form action="/search" method="post" class="search">
+      <input type="text" name="searchPlayer" placeholder="Enter Name">
+      <input type="submit">
+    </form>
+
     <div class="bc">
-      <form action="/" method="post">
+      <form action="/verdict" method="post">
         <!-- <label for="T1">Team 1</label>
     <label for="T2">Team 2</label> -->
-
+          
         <select class="textInput" name="T1" id="T1">
           <option value="India">India</option>
           <option value="Australia">Australia</option>

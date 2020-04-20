@@ -11,13 +11,14 @@ const app = express();
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
+// app.use(middleware.requireAuthentication());
 
 app.get("/", function (req, res) {
-  // res.sendFile(__dirname + "/index.html");
   res.render("home");
 });
 
 var list_t1 = [];
+var list_t12 = [];
 var list_t2 = [];
 var finalVerdict = "";
 
@@ -50,10 +51,17 @@ const matchSchema = new mongoose.Schema({
 });
 const Match = mongoose.model("Match", matchSchema);
 
-app.post("/", function (req, res) {
+// app.post("/verdict", function (req, res) {
+//   console.log('hell');
+// });
+
+app.post("/verdict", function (req, res) {
+  list_t1 = [];
+  list_t2 = [];
   var team1 = req.body.T1;
   var team2 = req.body.T2;
   var date = req.body.dt;
+  var flag=0;
   // console.log(date);
 
   Match.find(function (err, mat1) {
@@ -63,7 +71,11 @@ app.post("/", function (req, res) {
       var mat = mat1[0]["matches"];
       // console.log(mat1[0]["matches"], "mat1");
       mat.forEach(function (prop) {
-        if (((prop.t1 == team1 && prop.t2 == team2 ) || (prop.t1 == team2 && prop.t2 == team1 ))&& prop.date == date) {
+        if (
+          ((prop.t1 == team1 && prop.t2 == team2) ||
+            (prop.t1 == team2 && prop.t2 == team1)) &&
+          prop.date == date
+        ) {
           // console.log(team1, team2, prop.result);
           finalVerdict = prop.result;
 
@@ -72,33 +84,72 @@ app.post("/", function (req, res) {
               console.log("Error in team level 1");
             } else {
               country.forEach(function (players) {
+                if(flag==0){
+                
                 var player_array = players["players"];
 
                 //To print team1
 
-                player_array.forEach((individual) => {
+                player_array.forEach(function (individual) {
                   if (individual["tname"] == team1) list_t1.push(individual);
                 });
 
                 //To print team2
-                player_array.forEach((individual) => {
+                player_array.forEach(function (individual) {
                   if (individual["tname"] == team2) list_t2.push(individual);
                   // console.log(individual["name"]);
                 });
-                if (list_t1.length != 0 && list_t2.length != 0)
-                  // console.log(list_t1,list_t2);
+
+                // console.log(list_t1, list_t2);
+                if (list_t1.length != 0 && list_t2.length != 0) {
                   res.render("result", {
+                    result: finalVerdict,
                     list_t1: list_t1,
                     list_t2: list_t2,
-                    result: finalVerdict,
                   });
-              });
+                  // return next2();
+                  flag=1;
+                }
+              }});
             }
           });
         }
       });
     }
-    // res.send();
+  });
+  console.log(flag,"final flag");
+});
+
+// app.get("/search", function (req, res) {
+//   res.send("shit's working!!!");
+// });
+
+app.post("/search", function (req, res) {
+  list_t12 = [];
+  var pName = req.body.searchPlayer.toUpperCase();
+  console.log(pName, "xxx");
+
+  Team.find(function (err12, country1) {
+    if (err12) {
+      console.log("Error in team level 1");
+    } else {
+      country1.forEach(function (players12) {
+        var player_array12 = players12["players"];
+
+        //To print team1
+
+        player_array12.forEach((individual12) => {
+          if (individual12["name"].toUpperCase() == pName)
+            list_t12.push(individual12);
+        });
+        if (list_t12.length > 0) {
+          res.render("result2", {
+            player: list_t12[0],
+          });
+          // res.end();
+        }
+      });
+    }
   });
 });
 
