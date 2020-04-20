@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost:27017/crik-archive", {
+mongoose.connect("mongodb+srv://admin-naman:namanrocks@cluster0-wjfnd.mongodb.net/crik-archive", 
+ {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -153,4 +154,4 @@ app.post("/search", function (req, res) {
   });
 });
 
-app.listen(3000);
+app.listen(process.env.PORT || 3000);
