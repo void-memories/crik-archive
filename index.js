@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 mongoose.connect(
+  // "mongodb://localhost:27017/crik-archive",
   "mongodb+srv://admin-naman:namanrocks@cluster0-wjfnd.mongodb.net/crik-archive",
   {
     useNewUrlParser: true,
@@ -14,7 +15,6 @@ const app = express();
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
-// app.use(middleware.requireAuthentication());
 
 app.get("/", function (req, res) {
   res.render("home");
@@ -78,6 +78,7 @@ app.post("/verdict", function (req, res) {
           (mat[i].t1 == team2 && mat[i].t2 == team1)) &&
         mat[i].date == date
       ) {
+        finalVerdict=mat[i].result;
         flag = 1;
         break;
       }
@@ -97,6 +98,7 @@ app.post("/verdict", function (req, res) {
           }
         }
         if (list_t1.length != 0 && list_t2.length != 0) {
+          console.log(finalVerdict);
           res.render("result", {
             result: finalVerdict,
             list_t1: list_t1,
@@ -142,6 +144,96 @@ app.post("/search", function (req, res) {
       res.render("404");
     }
   });
+});
+
+app.post("/bats", function (req, res) {
+  var playersList = [];
+
+  Team.find(function (err, country) {
+    var n = country.length;
+    console.log(n);
+    for (var i = 0; i < n; i++) {
+      for (var j = 0; j < 11; j++) {
+        playersList.push(country[i]["players"][j]);
+      }
+    }
+    playersList.sort((a, b) => parseFloat(b.runs) - parseFloat(a.runs));
+
+    res.render("bats", {
+      playersList: playersList,
+    });
+  });
+});
+
+app.post("/ball", function (req, res) {
+  var playersList = [];
+
+  Team.find(function (err, country) {
+    var n = country.length;
+    console.log(n);
+    for (var i = 0; i < n; i++) {
+      for (var j = 0; j < 11; j++) {
+        playersList.push(country[i]["players"][j]);
+      }
+    }
+    playersList.sort((a, b) => parseFloat(b.wickets) - parseFloat(a.wickets));
+
+    res.render("bats", {
+      playersList: playersList,
+    });
+  });
+});
+
+app.get("/add", function (req, res) {
+  res.render("add");
+});
+
+app.post("/add", function (req, res) {
+  var team1 = req.body.T1;
+  var team2 = req.body.T2;
+  var date = req.body.dt;
+  var rst = req.body.rst;
+
+  var topush = { t1: team1, t2: team2, date: date, result: rst };
+  var final = [];
+
+  var flag = 0;
+  var mat = [];
+  // Match.findByIdAndDelete("5e9c8e9883a4bb14b2c9fc8e");
+  
+
+
+  Match.find(function (err, mat1) {
+    mat = mat1[0]["matches"];
+
+    final = mat;
+    final.push(topush);
+    flag = 1;
+    console.log("flag has been made 1");
+    Match.collection.drop();
+    
+
+    const n = new Match({
+      matches: final,
+    });
+    n.save();
+    // log.console("new databsae has been saved");
+    res.render("success");
+
+    // Match.deleteOne({_id : "5e9c8e9883a4bb14b2c9fc8e"});
+
+    // const n=new Match({
+    //   matches:final
+    // })
+    // n.save();
+  });
+  // while (1) {
+  //   if (flag) {
+  //     break;
+  //   }
+  // }
+
+  // Match.updateOne({_id : ObjectId("5e9c8e9883a4bb14b2c9fc8e")});
 });
 
 app.listen(process.env.PORT || 3000);

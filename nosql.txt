@@ -1,0 +1,123 @@
+Schemas:-
+
+const teamSchema = new mongoose.Schema({
+  players: [
+    {
+      name: String,
+      tname: String,
+      runs: Number,
+      centuries: Number,
+      halfCenturies: Number,
+      average: Number,
+      wickets: Number,
+      basePrice: Number,
+      soldPrice: Number,
+    },
+  ],
+});
+
+
+const matchSchema = new mongoose.Schema({
+  matches: [
+    {
+      t1: String,
+      t2: String,
+      date: String,
+      result: String,
+    },
+  ],
+});
+
+
+
+Queries :-
+1) Retrieve details of all the players who were present during
+the match between 2 specific teams on a specific date.
+
+app.post("/verdict", function (req, res) {
+  list_t1 = [];
+  list_t2 = [];
+  var team1 = req.body.T1;
+  var team2 = req.body.T2;
+  var date = req.body.dt;
+  var flag = 0;
+  // console.log(date);
+
+  Match.find(function (err, mat1) {
+    var flag = 0;
+    var mat = mat1[0]["matches"];
+    var n = mat.length;
+
+    for (var i = 0; i < n; i++) {
+      if (
+        ((mat[i].t1 == team1 && mat[i].t2 == team2) ||
+          (mat[i].t1 == team2 && mat[i].t2 == team1)) &&
+        mat[i].date == date
+      ) {
+        flag = 1;
+        break;
+      }
+    }
+
+    if (flag == 1) {
+      Team.find(function (err, country) {
+        var n = country.length;
+        console.log(n);
+        for (var i = 0; i < n; i++) {
+          if (country[i]["players"][0]["tname"] == team1) {
+            for (var j = 0; j < 11; j++) list_t1.push(country[i]["players"][j]);
+          }
+
+          if (country[i]["players"][0]["tname"] == team2) {
+            for (var j = 0; j < 11; j++) list_t2.push(country[i]["players"][j]);
+          }
+        }
+        if (list_t1.length != 0 && list_t2.length != 0) {
+          res.render("result", {
+            result: finalVerdict,
+            list_t1: list_t1,
+            list_t2: list_t2,
+          });
+        }
+      });
+    } else {
+      console.log("no");
+      res.render("404");
+    }
+  });
+});
+
+
+
+
+
+2) Retrieve details of a specific player
+
+app.post("/search", function (req, res) {
+  list_t12 = [];
+  var flag2 = 0;
+  var pName = req.body.searchPlayer.toUpperCase();
+
+  Team.find(function (err, country) {
+    var n = country.length;
+    console.log(n);
+    for (var i = 0; i < n; i++) {
+      for (var j = 0; j < 11; j++) {
+        if (country[i]["players"][j]["name"].toUpperCase() == pName) {
+          list_t12.push(country[i]["players"][j]);
+          flag2 = 1;
+          break;
+        }
+        if (flag2 == 1) break;
+      }
+    }
+    if (flag2 == 1) {
+      res.render("result2", {
+        player: list_t12[0],
+      });
+    } else {
+      console.log("no");
+      res.render("404");
+    }
+  });
+});

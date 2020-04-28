@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Top Players</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <h1>Top 20 Bowler</h1>
+    <table>
+      <thead>
+          <th>RANK</th>
+        <th>NAME</th>
+        <th>TEAM NAME</th>
+        <th>TOTAL RUNS</th>
+        <th>CENTURIES</th>
+        <th>HALF CENTURIES</th>
+        <th>AVERAGE</th>
+        <th>WICKETS</th>
+        <th>BASE PRICE</th>
+        <th>SOLD PRICE</th>
+      </thead>
+      <% for( let i = 0; i < 20; i++ ) { %>
+
+      <tr>
+          <td><%= i+1 %></td>
+        <td><%= playersList[i].name %></td>
+        <td><%= playersList[i].tname %></td>
+        <td><%= playersList[i].runs %></td>
+        <td><%= playersList[i].centuries %></td>
+        <td><%= playersList[i].halfCenturies %></td>
+        <td><%= playersList[i].average %></td>
+        <td><%= playersList[i].wickets %></td>
+        <td><%= playersList[i].basePrice %></td>
+        <td><%= playersList[i].soldPrice %></td>
+      </tr>
+      <% } %>
+    </table>
+  </body>
+</html>

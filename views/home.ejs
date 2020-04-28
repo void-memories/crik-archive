@@ -13,17 +13,17 @@
   </head>
   <body>
     <h1 class="title">The Crik Archive</h1>
-    
+
     <form action="/search" method="post" class="search">
-      <input type="text" name="searchPlayer" placeholder="Enter Name">
-      <input type="submit">
+      <input type="text" name="searchPlayer" placeholder="Enter Name" />
+      <input type="submit" />
     </form>
 
     <div class="bc">
       <form action="/verdict" method="post">
         <!-- <label for="T1">Team 1</label>
     <label for="T2">Team 2</label> -->
-          
+
         <select class="textInput" name="T1" id="T1">
           <option value="India">India</option>
           <option value="Australia">Australia</option>
@@ -49,5 +49,17 @@
         <input class="but textInput" type="submit" />
       </form>
     </div>
+
+    <div class="extrad">
+    <form action="/bats" method="POST" class="extra">
+      <button class="leader">Batsman Leaderboard</button>
+    </form>
+    <form action="/add" method="GET" class="extra">
+      <button class="leader">Add A Match</button>
+    </form>
+    <form action="/ball" method="POST" class="extra">
+      <button class="leader">Bowler Leaderboard</button>
+    </form>
+  </div>
   </body>
 </html>
